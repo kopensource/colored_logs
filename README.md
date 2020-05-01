@@ -10,11 +10,11 @@ pip3 install install colored-logs==0.0.2
 ```
 
 ### Features
-* __Print different types of logs__         _(info, success, warning, error, subtle)_
+* __Print different types of logs__ _(info, success, warning, error, subtle)_
 * __Add custom color for each type of log__ _(override defauld values)_
-* __Mark logs with custom ids__             _(optional, defaults to no id)_
-* __Show type for every log__               _(optional, defaults to True)_
-* __Show time of logging for every log__    _(optional, defaults to True)_
+* __Mark logs with custom ids__ _(optional, defaults to no id)_
+* __Show type for every log__ _(optional, defaults to True)_
+* __Show time of logging for every log__ _(optional, defaults to True)_
 
 ### Usage
 ```Python
