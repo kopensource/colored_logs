@@ -21,3 +21,6 @@ log.subtle('This is a subtle log')
 
 ### In action
 ![screenshot](https://i.imgur.com/XyLpBqD.png)
+
+### Credit
+This package relies on [colored](https://pypi.org/project/colored/), which is maintained by [dslackw](https://pypi.org/user/dslackw/)
