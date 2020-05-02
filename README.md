@@ -56,7 +56,7 @@ duration_float_seconds = log.stop_process(
 ```
 
 ### In action
-![screenshot](https://v.redd.it/ukunwf7xcdw41/DASH_720?source=fallback)
+![screenshot](https://thumbs.gfycat.com/QueasyNearBrocketdeer-size_restricted.gif)
 
 ### Credit
 This package relies on [colored](https://pypi.org/project/colored/), which is maintained by [dslackw](https://pypi.org/user/dslackw/)
