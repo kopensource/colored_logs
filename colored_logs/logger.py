@@ -1,5 +1,5 @@
 from typing import List, Optional
-from threading import Lock
+# from threading import Lock
 from multiprocessing import Process
 import time
 
@@ -34,7 +34,7 @@ class Logger:
         self.environment = environment
         self.console_line_char_len = console_line_char_len
 
-        self.lock = Lock()
+        # self.lock = Lock()
         self.utils = LoggerUtils()
 
     def info(
@@ -314,23 +314,23 @@ class Logger:
 
         log_type = log_type or sys._getframe().f_back.f_code.co_name
 
-        self.lock.acquire()
-        try:
-            self.__log_sync(
-                values,
-                prefix,
-                ID,
-                main_color_hex,
-                dim_color_hex,
-                icon,
-                log_type,
-                log_structure,
-                message_separator,
-                component_separator,
-                end
-            )
-        finally:
-            self.lock.release()
+        # self.lock.acquire()
+        # try:
+        self.__log_sync(
+            values,
+            prefix,
+            ID,
+            main_color_hex,
+            dim_color_hex,
+            icon,
+            log_type,
+            log_structure,
+            message_separator,
+            component_separator,
+            end
+        )
+        # finally:
+        #     self.lock.release()
 
     def __log_sync(
         self,
