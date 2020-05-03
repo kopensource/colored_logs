@@ -6,6 +6,7 @@ class IconSet:
         fail: str = '✘',
         warning: str = '!',
         error: str = '☠',
+        critical: str = '☠',
         process: str = '⧗',
         time: str = '◴'
     ):
@@ -14,5 +15,6 @@ class IconSet:
         self.fail = fail
         self.warning = warning
         self.error = error
+        self.critical = critical
         self.process = process
         self.time = time
