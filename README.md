@@ -10,27 +10,33 @@ pip3 install install colored-logs
 ```
 
 ### Features
-* __Print different types of logs__ _(info, success, fail, warning, error, subtle)_
-* __Add custom color for each type of log__ _(override default values)_
+* __Print different types of logs__ _(info, success, fail, warning, error, critical, subtle)_
+* __Add custom color for each type of log__ _(both foreground and background. Defaults to these [colors](https://coolors.co/b4aea8-3ea966-c8553d-f28f3b-a22b24-f3f3f3-982720-2bc4e9-918b86))_
+* __Can Provide colors in RGB, HEX, HSV, HSL, or CMYK__
 * __Mark logs with custom ids__ _(optional, defaults to no id)_
 * __Show type for every log__ _(optional, defaults to True)_
 * __Show time of logging for every log__ _(optional, defaults to True)_
+* __Change logging env to html__ _(defaults to Console. In html it appears like [this](https://jsfiddle.net/s2b4zpdq/))_
 * __Log async task__
 
 ### Usage
 ```Python
 import time
 
-from colored_logs import logger
+from colored_logs.logger import Logger, LogType#, LogEnvironmeent
 
-log = logger.Logger(id='Test-id-1')
+log = Logger(
+    ID='Test-id-1'
+    # environment=LogEnvironmeent.HTML,  # Override to print html logs
+    # console_line_char_len=90           # Optionally provide how many chars does fir in one consolee line
+)
 
 log.info('This is an info log')
 time.sleep(0.5)
 
-log.id='Test-id-2'
+log.ID='Test-id-2'
 log.info('This is an info log with a new id')
-log.id='Test-id-1'
+log.ID='Test-id-1'
 time.sleep(0.5)
 
 log.success('This is a success log')
@@ -40,23 +46,25 @@ time.sleep(0.5)
 log.error('This is an error log')
 time.sleep(0.5)
 log.fail('This is a fail log')
+time.sleep(0.5)
+log.critical('This is a critical log')
 
 time.sleep(1)
 
-log.start_process('This is taking a while')
+log.start_process('This will take a while')
 time.sleep(3.5)
 log.info('This is an info log while also logging the active process')
 
 time.sleep(3.5)
 
 duration_float_seconds = log.stop_process(
-    log_type=logger.LogType.Success,
+    log_type=LogType.Success,
     values='Successfully finished task'
 )
 ```
 
 ### In action
-![screenshot](https://thumbs.gfycat.com/QueasyNearBrocketdeer-size_restricted.gif)
+![video](https://thumbs.gfycat.com/PleasingLikableGrouper-size_restricted.gif)
 
 ### Credit
-This package relies on [colored](https://pypi.org/project/colored/), which is maintained by [dslackw](https://pypi.org/user/dslackw/)
+This package was inspired by [colored](https://pypi.org/project/colored/), which is maintained by [dslackw](https://pypi.org/user/dslackw/)
