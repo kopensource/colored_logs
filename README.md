@@ -64,7 +64,7 @@ duration_float_seconds = log.stop_process(
 ```
 
 ### In action
-![video](https://i.imgur.com/IimE90q.mp4)
+![video](https://thumbs.gfycat.com/PleasingLikableGrouper-size_restricted.gif)
 
 ### Credit
 This package was inspired by [colored](https://pypi.org/project/colored/), which is maintained by [dslackw](https://pypi.org/user/dslackw/)
