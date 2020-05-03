@@ -198,7 +198,7 @@ class Logger:
         animation_sleep: Optional[float] = None
     ) -> None:
         self.stop_process()
-        self.process_process = Process(
+        self.process = Process(
             target=self.__process,
             args=(
                 values,
@@ -214,7 +214,7 @@ class Logger:
         )
 
         self.process_start_time = time.time()
-        self.process_process.start()
+        self.process.start()
     
     def stop_process(
         self,
@@ -231,8 +231,8 @@ class Logger:
         duration_s = None
         
         try:
-            self.process_process.terminate()
-            self.process_process = None
+            self.process.terminate()
+            self.process = None
 
             duration_s = time.time() - self.process_start_time
         except:
