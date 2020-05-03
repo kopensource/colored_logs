@@ -104,9 +104,7 @@ class LoggerUtils:
     def console_max_chars_per_line(self) -> int:
         import os
 
-        _, columns = os.popen('stty size', 'r').read().split()
-
-        return int(columns)
+        return os.get_terminal_size().columns
 
     def string_without_ansii(
         self,
