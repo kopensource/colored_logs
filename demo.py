@@ -1,6 +1,6 @@
 import time
 
-from colored_logs.logger import Logger, LogType, LogEnvironmeent
+from colored_logs.logger import Logger, LogType#, LogEnvironmeent
 
 log = Logger(
     ID='Test-id-1'
