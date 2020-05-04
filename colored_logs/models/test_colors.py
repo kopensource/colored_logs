@@ -1,4 +1,4 @@
-from colored_logs.models.color import Color
+from .color import Color
 
 import unittest
 
