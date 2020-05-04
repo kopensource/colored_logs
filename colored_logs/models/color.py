@@ -20,7 +20,6 @@ class Color:
         for i in [r, g, b]:
             if i < 0 or i > 255:
                 raise Exception('Could not validate color:' + ' r:'+str(r) + ' g:'+str(g) + ' b:'+str(b))
-                # raise 'Could not validate color:' + str(r)#+ ' r:'+str(r) + ' g:'+str(g) + ' b:'+str(b)
     
     @classmethod
     def fromHex(
