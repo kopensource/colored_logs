@@ -2,11 +2,11 @@
 
 ### Install
 ```Bash
-pip install install colored-logs
+pip install colored-logs
 ```
 or
 ```Bash
-pip3 install install colored-logs
+pip3 install colored-logs
 ```
 
 ### Features
