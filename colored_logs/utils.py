@@ -21,8 +21,8 @@ class LoggerUtils:
         
         if environment == LogEnvironment.Console:
             return ANSI.styled(message, color_pair, self.trimmed_string_comps)
-        elif environment == LogEnvironment.HTML:
-            return HTML.styled(message, color_pair, self.trimmed_string_comps)
+        
+        return HTML.styled(message, color_pair, self.trimmed_string_comps)
 
     def append_to_string_to_console_edge(
         self,

@@ -25,6 +25,8 @@ time.sleep(0.5)
 log.fail('This is a fail log')
 time.sleep(0.5)
 log.critical('This is a critical log')
+time.sleep(0.5)
+log.subtle('This is a subtle log')
 
 time.sleep(1)
 

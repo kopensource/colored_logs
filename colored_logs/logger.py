@@ -18,7 +18,7 @@ class Logger:
         self,
         color_config: ColorConfig = ColorConfig(),
         icon_set: IconSet = IconSet(),
-        log_structure: List[LogInfo] = [LogInfo.LogType, LogInfo.ID, LogInfo.Icon, LogInfo.Message, LogInfo.Time],
+        log_structure: Optional[List[LogInfo]] = None,
         animation_type: AnimationType = AnimationType.Dots,
         animation_sleep: float = 0.5,
         ID: Optional[str] = None,
@@ -27,7 +27,7 @@ class Logger:
     ):
         self.color_config = color_config
         self.icon_set = icon_set
-        self.log_structure = log_structure
+        self.log_structure = log_structure or [LogInfo.LogType, LogInfo.ID, LogInfo.Icon, LogInfo.Message, LogInfo.Time]
         self.animation_type = animation_type
         self.animation_sleep = animation_sleep
         self.ID = ID
@@ -36,6 +36,8 @@ class Logger:
 
         self.lock = Lock()
         self.utils = LoggerUtils()
+        self.process_start_time = None
+        self.process = None
 
     def info(
         self,
@@ -147,8 +149,8 @@ class Logger:
     
     def subtle(
         self,
-        color: Optional[str] = None,
-        *values: object
+        *values: object,
+        color: Optional[str] = None
     ) -> None:
         self.__log(
             values,
@@ -160,7 +162,7 @@ class Logger:
     
     def log(
         self,
-        type: LogType,
+        log_type: LogType,
         *values: object,
         ID: Optional[str] = None,
         color: Optional[str] = None,
@@ -170,20 +172,20 @@ class Logger:
         animation_type: Optional[AnimationType] = None,
         animation_sleep: Optional[float] = None
     ) -> None:
-        if type in [LogType.Info, LogType.Success, LogType.Fail, LogType.Error]:
+        if log_type in [LogType.Info, LogType.Success, LogType.Fail, LogType.Error]:
             log_func = self.info
 
-            if type == LogType.Success:
+            if log_type == LogType.Success:
                 log_func = self.success
-            elif type == LogType.Fail:
+            elif log_type == LogType.Fail:
                 log_func = self.fail
-            elif type == LogType.Error:
+            elif log_type == LogType.Error:
                 log_func = self.error
             
             log_func(*values, ID=ID, color=color, dim_color=dim_color, icon=icon, log_structure=log_structure)
-        elif type == LogType.Subtle:
+        elif log_type == LogType.Subtle:
             self.subtle(*values, color=color)
-        elif type == LogType.Process:
+        elif log_type == LogType.Process:
             self.start_process(*values, ID=ID, color=color, dim_color=dim_color, icon=icon, log_structure=log_structure, animation_type=animation_type, animation_sleep=animation_sleep)
     
     def start_process(
@@ -230,16 +232,15 @@ class Logger:
     ) -> Optional[float]:
         duration_s = None
         
-        try:
+        if self.process is not None:
             self.process.terminate()
             self.process = None
-
             duration_s = time.time() - self.process_start_time
-        except:
-            pass
+        else:
+            return None
 
         if log_type is not None and values is not None and duration_s is not None:
-            if type(values) != tuple:
+            if not isinstance(values, tuple):
                 values = (values,)
             
             values +=  (self.utils.duration_str(duration_s),)
@@ -303,19 +304,14 @@ class Logger:
         dim_color_hex: str,
         prefix: str = '',
         icon: Optional[str] = None,
-        log_structure: List[LogInfo] = [LogInfo.Message],
+        log_structure: Optional[List[LogInfo]] = None,
         log_type: Optional[str] = None,
         message_separator: str = ' ',
         component_separator: str = ' | ',
         end: Optional[str] = None
     ) -> None:
         import inspect
-
-        try:
-            log_type = log_type or inspect.stack()[1][3]
-        except:
-            pass
-
+        
         self.lock.acquire()
         try:
             self.__log_sync(
@@ -325,8 +321,8 @@ class Logger:
                 main_color_hex,
                 dim_color_hex,
                 icon,
-                log_type,
-                log_structure,
+                log_type or inspect.currentframe().f_back.f_code.co_name,
+                log_structure or [LogInfo.Message],
                 message_separator,
                 component_separator,
                 end
