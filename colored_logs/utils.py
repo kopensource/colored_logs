@@ -95,10 +95,15 @@ class LoggerUtils:
         return '~' + duration
 
     @staticmethod
-    def console_max_chars_per_line() -> int:
-        import os
+    def console_max_chars_per_line(
+        default_value: int = 90
+    ) -> int:
+        try:
+            import os
 
-        return os.get_terminal_size().columns
+            return os.get_terminal_size().columns
+        except:
+            return default_value
     
     @staticmethod
     def string_without_ansii(string: str) -> str:
