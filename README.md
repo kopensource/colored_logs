@@ -1,4 +1,4 @@
-# colored_logs ![python_version](https://img.shields.io/static/v1?label=Python&message=3.5%20|%203.6%20|%203.7&color=blue) [![build](https://travis-ci.com/kopensource/colored_logs.svg?branch=develop)](https://travis-ci.com/github/kopensource/colored_logs) [![codecov](https://codecov.io/gh/kopensource/colored_logs/branch/master/graph/badge.svg)](https://codecov.io/gh/kopensource/colored_logs)
+# colored_logs ![python_version](https://img.shields.io/static/v1?label=Python&message=3.5%20|%203.6%20|%203.7&color=blue) [![build](https://travis-ci.com/kopensource/colored_logs.svg?branch=develop)](https://travis-ci.com/github/kopensource/colored_logs) [![codecov](https://codecov.io/gh/kopensource/colored_logs/branch/master/graph/badge.svg)](https://codecov.io/gh/kopensource/colored_logs) [![DeepSource](https://static.deepsource.io/deepsource-badge-dark-mini.svg)](https://deepsource.io/gh/kopensource/colored_logs/?ref=repository-badge)
 
 ### Install
 ```Bash
