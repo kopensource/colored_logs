@@ -14,13 +14,13 @@ jobs:
       osx_image: xcode11.2  # Python 3.7.4 running on macOS 10.14.4
       language: shell       # 'language: python' is an error on Travis CI macOS
 before_install:
-  - python --version
+  - python3 --version
   - pip install -U pip
   - pip install -U pytest
   - pip install codecov
 script:
-  - python setup.py test
-  - python setup.py bdist_wheel
+  - python3 setup.py test
+  - python3 setup.py bdist_wheel
   - pytest
 after_success:
   - codecov # submit coverage
