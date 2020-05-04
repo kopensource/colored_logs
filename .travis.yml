@@ -16,12 +16,12 @@ jobs:
 before_install:
   - python3 --version
   - pip3 install -U pip
-  - pip3 install -U pytest
+  - pip3 install -U pytest pytest-cov
   - pip3 install codecov
 script:
   - python3 setup.py test
   - python3 setup.py bdist_wheel
-  - pytest
+  - pytest --cov=./
 after_success:
   - codecov # submit coverage
 deploy:
