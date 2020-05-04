@@ -1,7 +1,8 @@
 language: python
+cache: pip
 python:
-  # - "3.4"
-  # - "3.5"
+  - "3.4"
+  - "3.5"
   - "3.6"
   - "3.7"
   # - "3.8"
@@ -17,8 +18,13 @@ before_install:
   - pip install -U pip
   - pip install -U pytest
   - pip install codecov
-install:
-  - pip install ".[test]" . # install package + test dependencies
-script: pytest # run tests
+script:
+  - python setup.py test
+  - python setup.py bdist_wheel
+  - pytest
 after_success:
   - codecov # submit coverage
+deploy:
+  provider: pypi
+  password:
+    secure: rDGlUEL1wFNRyfT6o07DbpFo2IY4Dflv/SjhHIdUhOzWPQJ7uigVRRTl7XAjy0I0BiooIUQHCuZ1r+hij5e/4Jw9CJnL3yzrq+D7WyHPs6Uaz7tbgbuddq7ZtQX+NF6e+RczGuhxhXQCXnUFN1/UF+XVuMLHlPWvGJMyDObaK9Z01NzWMBJKSjtgUenWTx7T3V5Fdc5nJGV7VoKXf/PlQTe0a0BLujmI9DiZ5bOuJ0Sw0qJv09L3syNrDEyjLgBHl+cOBFT5qHt+hfguyNsIjW0qDHkbRNbxp6lW691L/+8OrQyAO9Z7y+JC300Ox6cJjokluYYaHNRRsuower+L6ojqbbCxf2Z+kEUE93tUTtIhe+o4R1+Z2/yh2pEl/NvT3itKjN/JoO5LaYtlNaC/5Kwu2kKDKgr9bYW0LOwmF4UwrbKiFjJhbfECsrkyNapNeTkFuUguXTbDuJ1DVXQhR7FVtB0/KPApq4PVuq8OxMMmoh/2o/ieoNwcfUKjdIvf3uxc5j1m/AUMkZGBybvYLJKYHWbYlP/d95OuWTmuHIOpTIXTCQajwMchcd2uG73c1e9XMdz4/OV14Yj6IDCXM5aZ/YjiMQmAaHM+ZWLLbDCv65cu2ocC/dqn58Son6atGZS4b8XaDd1xPwj+wgVlCu3hPgZZ/qZwF3aXEi0SHME=
