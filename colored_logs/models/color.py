@@ -11,8 +11,8 @@ class Color:
         self.g = g
         self.b = b
     
+    @staticmethod
     def validate(
-        self,
         r: int,
         g: int,
         b: int,

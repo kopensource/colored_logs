@@ -24,29 +24,6 @@ class LoggerUtils:
         elif environment == LogEnvironment.HTML:
             return HTML.styled(message, color_pair, self.trimmed_string_comps)
 
-    def hex(
-        self,
-        hex_str: str
-    ) -> str:
-        if not hex_str.startswith('#'):
-            hex_str = '#' + hex_str
-        
-        return hex_str
-
-    def uniform_len_string(
-        self,
-        string: str,
-        preferred_length: int = 8,
-        filling_char: str = ' '
-    ) -> str:
-        while len(string) < preferred_length:
-            string += filling_char
-        
-        if len(string) > preferred_length:
-            string = string[:preferred_length-1] + '.'
-        
-        return string
-
     def append_to_string_to_console_edge(
         self,
         string: str,
@@ -67,16 +44,32 @@ class LoggerUtils:
         available_length = max_console_len - len(unescaped_string) - len(unescaped_string_to_append) - 1
 
         if available_length >= 0:
-            return string + ' ' * available_length + string_to_append
+            return string + filler_char * int(float(available_length) / float(len(filler_char))) + string_to_append
         
         return unescaped_string
-
-    def time_str_hour_format(self) -> str:
+    
+    @staticmethod
+    def uniform_len_string(
+        string: str,
+        preferred_length: int = 8,
+        filling_char: str = ' '
+    ) -> str:
+        while len(string) < preferred_length:
+            string += filling_char
+        
+        if len(string) > preferred_length:
+            string = string[:preferred_length-1] + '.'
+        
+        return string
+    
+    @staticmethod
+    def time_str_hour_format() -> str:
         import time
 
         return time.strftime("%H:%M:%S", time.localtime())
     
-    def duration_str(self, seconds: float) -> str:
+    @staticmethod
+    def duration_str(seconds: float) -> str:
         seconds = int(seconds)
         
         m, s = divmod(seconds, 60)
@@ -101,25 +94,22 @@ class LoggerUtils:
 
         return '~' + duration
 
-    def console_max_chars_per_line(self) -> int:
+    @staticmethod
+    def console_max_chars_per_line() -> int:
         import os
 
         return os.get_terminal_size().columns
-
-    def string_without_ansii(
-        self,
-        string: str
-    ) -> str:
+    
+    @staticmethod
+    def string_without_ansii(string: str) -> str:
         import re
 
         ansi_escape = re.compile(r'(?:\x1B[@-_]|[\x80-\x9F])[0-?]*[ -/]*[@-~]')
 
         return ansi_escape.sub('', string)
     
-    def string_without_html_tags(
-        self,
-        string: str
-    ) -> str:
+    @staticmethod
+    def string_without_html_tags(string: str) -> str:
         _string = ''
         should_add = True
 
@@ -135,7 +125,8 @@ class LoggerUtils:
         
         return _string
     
-    def trimmed_string_comps(self, string: str) -> (str, str, str):
+    @staticmethod
+    def trimmed_string_comps(string: str) -> (str, str, str):
         no_prefix = string.lstrip()
         no_suffix = string.rstrip()
 
@@ -189,9 +180,8 @@ class ANSI:
         Foreground = 38
         Background = 48
     
-    @classmethod
+    @staticmethod
     def __color(
-        cls,
         color: Color,
         color_type: __ColorType
     ) -> str:
@@ -251,9 +241,8 @@ class HTML:
         Foreground = 'color'
         Background = 'background-color'
     
-    @classmethod
+    @staticmethod
     def __color(
-        cls,
         color: Color,
         color_type: __ColorType
     ) -> str:

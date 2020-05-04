@@ -69,7 +69,7 @@ class Logger:
             ID or self.ID,
             color or self.color_config.success,
             dim_color or self.color_config.dim,
-            icon=self.icon_set.success,
+            icon=icon or self.icon_set.success,
             log_structure=log_structure or self.log_structure
         )
     
@@ -87,7 +87,7 @@ class Logger:
             ID or self.ID,
             color or self.color_config.fail,
             dim_color or self.color_config.dim,
-            icon=self.icon_set.fail,
+            icon=icon or self.icon_set.fail,
             log_structure=log_structure or self.log_structure
         )
     
@@ -105,7 +105,7 @@ class Logger:
             ID or self.ID,
             color or self.color_config.warning,
             dim_color or self.color_config.dim,
-            icon=self.icon_set.error,
+            icon=icon or self.icon_set.error,
             log_structure=log_structure or self.log_structure
         )
     
@@ -123,7 +123,7 @@ class Logger:
             ID or self.ID,
             color or self.color_config.error,
             dim_color or self.color_config.dim,
-            icon=self.icon_set.error,
+            icon=icon or self.icon_set.error,
             log_structure=log_structure or self.log_structure
         )
     
@@ -141,7 +141,7 @@ class Logger:
             ID or self.ID,
             color or self.color_config.critical,
             dim_color or self.color_config.dim,
-            icon=self.icon_set.critical,
+            icon=icon or self.icon_set.critical,
             log_structure=log_structure or self.log_structure
         )
     
@@ -205,7 +205,7 @@ class Logger:
                 ID or self.ID,
                 color or self.color_config.process,
                 dim_color or self.color_config.dim,
-                self.icon_set.process,
+                icon or self.icon_set.process,
                 log_structure or self.log_structure,
                 'process',
                 animation_type or self.animation_type,
@@ -305,14 +305,16 @@ class Logger:
         icon: Optional[str] = None,
         log_structure: List[LogInfo] = [LogInfo.Message],
         log_type: Optional[str] = None,
-        message_suffix: Optional[str] = None,
         message_separator: str = ' ',
         component_separator: str = ' | ',
         end: Optional[str] = None
     ) -> None:
-        import sys
+        import inspect
 
-        log_type = log_type or sys._getframe().f_back.f_code.co_name
+        try:
+            log_type = log_type or inspect.stack()[1][3]
+        except:
+            pass
 
         self.lock.acquire()
         try:
