@@ -103,9 +103,12 @@ class LoggerUtils:
 
             return os.get_terminal_size().columns
         except:
-            import shutil
+            try:
+                import shutil
 
-            return shutil.get_terminal_size(fallback=(default_value, 24))
+                return shutil.get_terminal_size(fallback=(default_value, 24))[0]
+            except:
+                return default_value
     
     @staticmethod
     def string_without_ansii(string: str) -> str:
