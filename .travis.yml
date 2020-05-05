@@ -18,12 +18,17 @@ before_install:
   - pip3 install -U pip
   - pip3 install -U pytest pytest-cov
   - pip3 install codecov
+  - pip3 install coverage
 script:
   - python3 setup.py test
   - python3 setup.py bdist_wheel
-  - pytest --cov=./
+  - pytest --cov=./ --cov-report xml
+  - export DEEPSOURCE_DSN=https://046b2111e6894d4588c1c6a0922d9633@deepsource.io
 after_success:
   - codecov # submit coverage
+  - coverage xml # Generate coverage report in xml format
+  - curl https://deepsource.io/cli | sh # Install deepsource CLI
+  - ./bin/deepsource report --analyzer test-coverage --key python --value-file ./coverage.xml # Report coverage artifact to 'test-coverage' analyzer
 deploy:
   provider: pypi
   skip_existing: true
