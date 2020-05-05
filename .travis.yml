@@ -28,7 +28,7 @@ after_success:
   - codecov # submit coverage
   - coverage xml # Generate coverage report in xml format
   - curl https://deepsource.io/cli | sh # Install deepsource CLI
-  - ./bin/deepsource report --analyzer coverage --key python --value-file ./coverage.xml # Report coverage artifact to 'test-coverage' analyzer
+  - ./bin/deepsource report --analyzer test-coverage --key python --value-file ./coverage.xml # Report coverage artifact to 'test-coverage' analyzer
 deploy:
   provider: pypi
   skip_existing: true
