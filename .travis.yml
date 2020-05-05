@@ -4,7 +4,7 @@ python:
   # - "3.5"
   # - "3.6"
   # - "3.7"
-  
+
   # - "3.8"
   # - "nightly"  # nightly build
 jobs:
@@ -21,14 +21,14 @@ jobs:
         # - python3 -m pip install --upgrade pip
       env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
 before_install:
-  - python3 --version
-  - pip3 install -U pip
-  - pip3 install -U pytest pytest-cov
-  - pip3 install codecov
-  - pip3 install coverage
+  - python --version
+  - pip install -U pip
+  - pip install -U pytest pytest-cov
+  - pip install codecov
+  - pip install coverage
 script:
-  - python3 setup.py test
-  - python3 setup.py bdist_wheel
+  - python setup.py test
+  - python setup.py bdist_wheel
   - pytest --cov=./ --cov-report xml
   - export DEEPSOURCE_DSN=https://046b2111e6894d4588c1c6a0922d9633@deepsource.io
 after_success:
