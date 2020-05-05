@@ -96,14 +96,16 @@ class LoggerUtils:
 
     @staticmethod
     def console_max_chars_per_line(
-        default_value: int = 90
+        default_value: int = 80
     ) -> int:
         try:
             import os
 
             return os.get_terminal_size().columns
         except:
-            return default_value
+            import shutil
+
+            return shutil.get_terminal_size(fallback=(default_value, 24))
     
     @staticmethod
     def string_without_ansii(string: str) -> str:
