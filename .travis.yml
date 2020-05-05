@@ -1,47 +1,35 @@
 language: python
 cache: pip
 python:
-  # - "3.5"
-  # - "3.6"
-  # - "3.7"
-
-  # - "3.8"
+  - "3.5"
+  - "3.6"
+  - "3.7"
   # - "nightly"  # nightly build
 jobs:
   include:
-    # - name: "Python 3.7.4 on macOS"
-    #   os: osx
-    #   osx_image: xcode11.2  # Python 3.7.4 running on macOS 10.14.4
-    #   language: shell       # 'language: python' is an error on Travis CI macOS
-    - name: "Python 3.7.0 on Windows"
-      os: windows           # Windows 10.0.17134 N/A Build 17134
-      language: shell       # 'language: python' is an error on Travis CI Windows
-      before_install:
-        - choco install python --version 3.7.0
-        # - python3 -m pip install --upgrade pip
-      env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
+    - name: "Python 3.7.4 on macOS"
+      os: osx
+      osx_image: xcode11.2  # Python 3.7.4 running on macOS 10.14.4
+      language: shell       # 'language: python' is an error on Travis CI macOS
 before_install:
-  - python --version
-  - pip install -U pip
-  - pip install -U pytest pytest-cov
-  - pip install codecov
-  - pip install coverage
+  - python3 --version
+  - pip3 install -U pip
+  - pip3 install -U pytest pytest-cov   # install dependecy for testing
+  - pip3 install codecov                # install dependecy for test coverage
 script:
-  - python setup.py test
-  - python setup.py bdist_wheel
-  - pytest --cov=./ --cov-report xml
-  - export DEEPSOURCE_DSN=https://046b2111e6894d4588c1c6a0922d9633@deepsource.io
+  - python3 setup.py bdist_wheel        # build
+  - pytest --cov=./                     # run pytest and generate coverage
 after_success:
-  - codecov # submit coverage
-  - coverage xml # Generate coverage report in xml format
-  - curl https://deepsource.io/cli | sh # Install deepsource CLI
+  - codecov                             # submit coverage to codecov
+  - coverage xml                        # generate coverage report in xml format
+  - curl https://deepsource.io/cli | sh # install deepsource CLI
   - ./bin/deepsource report --analyzer test-coverage --key python --value-file ./coverage.xml # Report coverage artifact to 'test-coverage' analyzer
 deploy:
-  provider: pypi
-  skip_existing: true
+  provider: pypi                        # use pypi for deploying
+  skip_existing: true                   # if build already exists, don't upload it
   skip_cleanup: true
   on:
-    branch: release
-  user: __token__
-  password:
+    branch: release                     # only deploy from release branch
+  user: __token__                       # pypi username
+  password:                             # for safety, no password is used, but an encripted version of it, created by travis
     secure: rDGlUEL1wFNRyfT6o07DbpFo2IY4Dflv/SjhHIdUhOzWPQJ7uigVRRTl7XAjy0I0BiooIUQHCuZ1r+hij5e/4Jw9CJnL3yzrq+D7WyHPs6Uaz7tbgbuddq7ZtQX+NF6e+RczGuhxhXQCXnUFN1/UF+XVuMLHlPWvGJMyDObaK9Z01NzWMBJKSjtgUenWTx7T3V5Fdc5nJGV7VoKXf/PlQTe0a0BLujmI9DiZ5bOuJ0Sw0qJv09L3syNrDEyjLgBHl+cOBFT5qHt+hfguyNsIjW0qDHkbRNbxp6lW691L/+8OrQyAO9Z7y+JC300Ox6cJjokluYYaHNRRsuower+L6ojqbbCxf2Z+kEUE93tUTtIhe+o4R1+Z2/yh2pEl/NvT3itKjN/JoO5LaYtlNaC/5Kwu2kKDKgr9bYW0LOwmF4UwrbKiFjJhbfECsrkyNapNeTkFuUguXTbDuJ1DVXQhR7FVtB0/KPApq4PVuq8OxMMmoh/2o/ieoNwcfUKjdIvf3uxc5j1m/AUMkZGBybvYLJKYHWbYlP/d95OuWTmuHIOpTIXTCQajwMchcd2uG73c1e9XMdz4/OV14Yj6IDCXM5aZ/YjiMQmAaHM+ZWLLbDCv65cu2ocC/dqn58Son6atGZS4b8XaDd1xPwj+wgVlCu3hPgZZ/qZwF3aXEi0SHME=
