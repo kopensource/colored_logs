@@ -11,10 +11,6 @@ class ColorTestCase(unittest.TestCase):
         self.assertIsNotNone(Color(0, 0, 0))
         self.assertRaises(Exception, Color.__init__, -5, 0, 0)
 
-
-import time
-from colored_logs.logger import Logger
-
 class IntegrationTestCase(unittest.TestCase):
     def test_demo(self):
         try:
