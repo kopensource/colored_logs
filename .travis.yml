@@ -1,5 +1,5 @@
 language: python
-cache: pip
+cache: pip  # cache content that does not often change, to speed up your build process
 python:
   - "3.5"
   - "3.6"
@@ -17,6 +17,7 @@ before_install:
   - pip3 install -U pytest pytest-cov   # install dependecy for testing
   - pip3 install codecov                # install dependecy for test coverage
 script:
+  # - if [ "$TRAVIS_BRANCH" = "develop" ]; then echo 'this is develop'; fi # conditional script
   - python3 setup.py bdist_wheel        # build
   - pytest --cov=./                     # run pytest and generate coverage
 after_success:
