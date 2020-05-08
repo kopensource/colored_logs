@@ -195,7 +195,7 @@ class ANSI:
         color: Color,
         color_type: __ColorType
     ) -> str:
-        return '\033[' + str(color_type.value) + ':2::' + str(color.r) + ':' + str(color.g) + ':' + str(color.b) + 'm'
+        return '\033[' + str(color_type.value) + ';2;' + str(color.r) + ';' + str(color.g) + ';' + str(color.b) + 'm'
 
 
 class HTML:
