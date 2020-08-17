@@ -21,6 +21,7 @@ class Logger:
         log_structure: Optional[List[LogInfo]] = None,
         animation_type: AnimationType = AnimationType.Dots,
         animation_sleep: float = 0.5,
+        loginfo_id_len: int = 14,
         ID: Optional[str] = None,
         environment: LogEnvironmeent = LogEnvironmeent.Console,
         console_line_char_len: Optional[int] = None
@@ -33,6 +34,7 @@ class Logger:
         self.ID = ID
         self.environment = environment
         self.console_line_char_len = console_line_char_len
+        self.loginfo_id_len = loginfo_id_len = 14
 
         self.lock = Lock()
         self.utils = LoggerUtils()
@@ -369,7 +371,7 @@ class Logger:
                 log_component = self.utils.uniform_len_string(threading.current_thread().getName(), 10)
             elif log_info == LogInfo.ID:
                 if ID is not None and len(ID) > 0:
-                    log_component = self.utils.uniform_len_string(ID, 14)
+                    log_component = self.utils.uniform_len_string(ID, self.loginfo_id_len)
             elif log_info == LogInfo.Message:
                 if len(message) > 0:
                     log_component = message
