@@ -34,7 +34,7 @@ class Logger:
         self.ID = ID
         self.environment = environment
         self.console_line_char_len = console_line_char_len
-        self.loginfo_id_len = loginfo_id_len = 14
+        self.loginfo_id_len = loginfo_id_len
 
         self.lock = Lock()
         self.utils = LoggerUtils()
