@@ -1,6 +1,5 @@
 from typing import List, Optional
-from threading import Lock
-from multiprocessing import Process
+from threading import Lock, Thread
 import time
 
 from .models import color_config as cc, icon_set as ics, log_info as li, animation_type as at, log_type as lt, log_environment as le
@@ -12,6 +11,7 @@ LogInfo = li.LogInfo
 AnimationType = at.AnimationType
 LogType = lt.LogType
 LogEnvironmeent = le.LogEnvironment
+
 
 class Logger:
     def __init__(
@@ -38,8 +38,11 @@ class Logger:
 
         self.lock = Lock()
         self.utils = LoggerUtils()
-        self.process_start_time = None
-        self.process = None
+
+        self.__process_thread = None
+        self.__thread_start_time = None
+        self.__thread_working = False
+        self.__thread_lock = Lock()
 
     def info(
         self,
@@ -202,7 +205,8 @@ class Logger:
         animation_sleep: Optional[float] = None
     ) -> None:
         self.stop_process()
-        self.process = Process(
+        self.__thread_working = True
+        self.__process_thread = Thread(
             target=self.__process,
             args=(
                 values,
@@ -217,8 +221,8 @@ class Logger:
             )
         )
 
-        self.process_start_time = time.time()
-        self.process.start()
+        self.__thread_start_time = time.time()
+        self.__process_thread.start()
     
     def stop_process(
         self,
@@ -234,10 +238,16 @@ class Logger:
     ) -> Optional[float]:
         duration_s = None
         
-        if self.process is not None:
-            self.process.terminate()
-            self.process = None
-            duration_s = time.time() - self.process_start_time
+        if self.__process_thread is not None:
+            self.__thread_lock.acquire()
+            try:
+                self.__thread_working = False
+            finally:
+                self.__thread_lock.release()
+
+            self.__process_thread.join()
+            self.__process_thread = None
+            duration_s = time.time() - self.__thread_start_time
         else:
             return None
 
@@ -279,6 +289,13 @@ class Logger:
         i = 0
 
         while True:
+            self.__thread_lock.acquire()
+            try:
+                if not self.__thread_working:
+                    return
+            finally:
+                self.__thread_lock.release()
+
             diff_s = int(time.time() - start_time)
             animation_str = animation_type.value[i%len(animation_type.value)]
             time_str = time.strftime('%H:%M:%S', time.gmtime(diff_s))

@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="colored_logs",
-    version="0.2.6",
+    version="0.2.7",
     author="Kovacs Kristof-Attila",
     description="A colored logs package based on 'colored'",
     long_description=long_description,
