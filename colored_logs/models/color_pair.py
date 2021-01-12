@@ -14,10 +14,8 @@ class ColorPair:
         self.foreground = self.__color(foreground)
         self.background = self.__color(background)
 
-    def __color(
-        self,
-        color: Optional[Union[str, Color]]
-    ) -> Optional[ColorPair]:
+    @staticmethod
+    def __color(color: Optional[Union[str, Color]]) -> Optional:
         if not color:
             return None
 
