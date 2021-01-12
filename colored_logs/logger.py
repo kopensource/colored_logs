@@ -1,16 +1,18 @@
-from typing import List, Optional
+from typing import List, Optional, Union
 from threading import Lock, Thread
 import time
 
-from .models import color_config as cc, icon_set as ics, log_info as li, animation_type as at, log_type as lt, log_environment as le
 from .utils import LoggerUtils
 
-ColorConfig = cc.ColorConfig
-IconSet = ics.IconSet
-LogInfo = li.LogInfo
-AnimationType = at.AnimationType
-LogType = lt.LogType
-LogEnvironmeent = le.LogEnvironment
+from .models.color import Color
+from .models.color_pair import ColorPair
+from .models.color_config import ColorConfig
+
+from .models.log_type import LogType
+from .models.icon_set import IconSet
+from .models.log_info import LogInfo
+from .models.animation_type import AnimationType
+from .models.log_environment import LogEnvironment
 
 
 class Logger:
@@ -23,7 +25,7 @@ class Logger:
         animation_sleep: float = 0.5,
         loginfo_id_len: int = 14,
         ID: Optional[str] = None,
-        environment: LogEnvironmeent = LogEnvironmeent.Console,
+        environment: LogEnvironment = LogEnvironment.Console,
         console_line_char_len: Optional[int] = None
     ):
         self.color_config = color_config
@@ -48,8 +50,8 @@ class Logger:
         self,
         *values: object,
         ID: Optional[str] = None,
-        color: Optional[str] = None,
-        dim_color: Optional[str] = None,
+        color: Optional[Union[str, Color, ColorPair]] = None,
+        dim_color: Optional[Union[str, Color, ColorPair]] = None,
         icon: Optional[str] = None,
         log_structure: Optional[List[LogInfo]] = None
     ) -> None:
@@ -66,8 +68,8 @@ class Logger:
         self,
         *values: object,
         ID: Optional[str] = None,
-        color: Optional[str] = None,
-        dim_color: Optional[str] = None,
+        color: Optional[Union[str, Color, ColorPair]] = None,
+        dim_color: Optional[Union[str, Color, ColorPair]] = None,
         icon: Optional[str] = None,
         log_structure: Optional[List[LogInfo]] = None
     ) -> None:
@@ -84,8 +86,8 @@ class Logger:
         self,
         *values: object,
         ID: Optional[str] = None,
-        color: Optional[str] = None,
-        dim_color: Optional[str] = None,
+        color: Optional[Union[str, Color, ColorPair]] = None,
+        dim_color: Optional[Union[str, Color, ColorPair]] = None,
         icon: Optional[str] = None,
         log_structure: Optional[List[LogInfo]] = None
     ) -> None:
@@ -102,8 +104,8 @@ class Logger:
         self,
         *values: object,
         ID: Optional[str] = None,
-        color: Optional[str] = None,
-        dim_color: Optional[str] = None,
+        color: Optional[Union[str, Color, ColorPair]] = None,
+        dim_color: Optional[Union[str, Color, ColorPair]] = None,
         icon: Optional[str] = None,
         log_structure: Optional[List[LogInfo]] = None
     ) -> None:
@@ -120,8 +122,8 @@ class Logger:
         self,
         *values: object,
         ID: Optional[str] = None,
-        color: Optional[str] = None,
-        dim_color: Optional[str] = None,
+        color: Optional[Union[str, Color, ColorPair]] = None,
+        dim_color: Optional[Union[str, Color, ColorPair]] = None,
         icon: Optional[str] = None,
         log_structure: Optional[List[LogInfo]] = None
     ) -> None:
@@ -138,8 +140,8 @@ class Logger:
         self,
         *values: object,
         ID: Optional[str] = None,
-        color: Optional[str] = None,
-        dim_color: Optional[str] = None,
+        color: Optional[Union[str, Color, ColorPair]] = None,
+        dim_color: Optional[Union[str, Color, ColorPair]] = None,
         icon: Optional[str] = None,
         log_structure: Optional[List[LogInfo]] = None
     ) -> None:
@@ -155,7 +157,7 @@ class Logger:
     def subtle(
         self,
         *values: object,
-        color: Optional[str] = None
+        Optional[Union[str, Color, ColorPair]] = None
     ) -> None:
         self.__log(
             values,
@@ -170,8 +172,8 @@ class Logger:
         log_type: LogType,
         *values: object,
         ID: Optional[str] = None,
-        color: Optional[str] = None,
-        dim_color: Optional[str] = None,
+        color: Optional[Union[str, Color, ColorPair]] = None,
+        dim_color: Optional[Union[str, Color, ColorPair]] = None,
         icon: Optional[str] = None,
         log_structure: Optional[List[LogInfo]] = None,
         animation_type: Optional[AnimationType] = None,
@@ -197,8 +199,8 @@ class Logger:
         self,
         *values: object,
         ID: Optional[str] = None,
-        color: Optional[str] = None,
-        dim_color: Optional[str] = None,
+        color: Optional[Union[str, Color, ColorPair]] = None,
+        dim_color: Optional[Union[str, Color, ColorPair]] = None,
         icon: Optional[str] = None,
         log_structure: Optional[List[LogInfo]] = None,
         animation_type: Optional[AnimationType] = None,
@@ -229,8 +231,8 @@ class Logger:
         log_type: Optional[LogType] = None,
         values: object = None,
         ID: Optional[str] = None,
-        color: Optional[str] = None,
-        dim_color: Optional[str] = None,
+        color: Optional[Union[str, Color, ColorPair]] = None,
+        dim_color: Optional[Union[str, Color, ColorPair]] = None,
         icon: Optional[str] = None,
         log_structure: Optional[List[LogInfo]] = None,
         animation_type: Optional[AnimationType] = None,
@@ -277,8 +279,8 @@ class Logger:
         self,
         values: object,
         ID: Optional[str],
-        color: Optional[str],
-        dim_color: Optional[str],
+        color: Optional[Union[str, Color, ColorPair]],
+        dim_color: Optional[Union[str, Color, ColorPair]],
         icon: Optional[str],
         log_structure: List[LogInfo],
         log_type: Optional[str],
@@ -319,8 +321,8 @@ class Logger:
         self,
         values: object,
         ID: Optional[str],
-        main_color_hex: str,
-        dim_color_hex: str,
+        main_color: Optional[Union[str, Color, ColorPair]],
+        dim_color: Optional[Union[str, Color, ColorPair]],
         prefix: str = '',
         icon: Optional[str] = None,
         log_structure: Optional[List[LogInfo]] = None,
@@ -337,8 +339,8 @@ class Logger:
                 values,
                 prefix,
                 ID,
-                main_color_hex,
-                dim_color_hex,
+                main_color,
+                dim_color,
                 icon,
                 log_type or inspect.currentframe().f_back.f_code.co_name,
                 log_structure or [LogInfo.Message],
@@ -354,8 +356,8 @@ class Logger:
         values: object,
         prefix: str,
         ID: str,
-        main_color_hex: str,
-        dim_color_hex: str,
+        main_color: Optional[Union[str, Color, ColorPair]],
+        dim_color: Optional[Union[str, Color, ColorPair]],
         icon: Optional[str],
         log_type: Optional[str],
         log_structure: List[LogInfo],
@@ -392,11 +394,11 @@ class Logger:
             elif log_info == LogInfo.Message:
                 if len(message) > 0:
                     log_component = message
-            
+
             if log_component is not None:
-                log_components.append(self.utils.styled_string(log_component, log_info, main_color_hex, dim_color_hex, self.environment))
-        
-        message = self.utils.styled_string(component_separator, LogInfo.Time, main_color_hex, dim_color_hex, self.environment).join(log_components)
+                log_components.append(self.utils.styled_string(log_component, log_info, main_color, dim_color, self.environment))
+
+        message = self.utils.styled_string(component_separator, LogInfo.Time, main_color, dim_color, self.environment).join(log_components)
 
         if LogInfo.Time in log_structure:
             time_str = self.utils.time_str_hour_format()
@@ -404,17 +406,17 @@ class Logger:
 
             if time_icon is not None and len(time_icon) > 0:
                 time_str = time_icon + ' ' + time_str
-            
+
             message = self.utils.append_to_string_to_console_edge(
                 message,
-                self.utils.styled_string(time_str, LogInfo.Time, main_color_hex, dim_color_hex, self.environment),
+                self.utils.styled_string(time_str, LogInfo.Time, main_color, dim_color, self.environment),
                 self.environment,
                 console_line_char_len=self.console_line_char_len
             )
         else:
             message = self.utils.append_to_string_to_console_edge(message, '', self.environment, console_line_char_len=self.console_line_char_len)
 
-        if self.environment == LogEnvironmeent.HTML:
+        if self.environment == LogEnvironment.HTML:
             message = '<pre>' + message + '</pre>'
 
         print(prefix+message, end=end)

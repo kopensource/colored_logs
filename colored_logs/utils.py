@@ -1,5 +1,6 @@
 from typing import Optional
 
+from .models.color_config import ColorConfig
 from .models.log_info import LogInfo
 from .models.color_pair import ColorPair
 from .models.color import Color
@@ -14,6 +15,9 @@ class LoggerUtils:
         dim_color_pair: Optional[ColorPair],
         environment: LogEnvironment
     ) -> str:
+        main_color_pair = ColorConfig._ensure_color_pair(main_color_pair)
+        dim_color_pair = ColorConfig._ensure_color_pair(dim_color_pair)
+
         color_pair = dim_color_pair
 
         if log_info in [LogInfo.LogType, LogInfo.Icon, LogInfo.Message]:
