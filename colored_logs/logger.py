@@ -157,7 +157,7 @@ class Logger:
     def subtle(
         self,
         *values: object,
-        Optional[Union[str, Color, ColorPair]] = None
+        color: Optional[Union[str, Color, ColorPair]] = None
     ) -> None:
         self.__log(
             values,
